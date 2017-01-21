@@ -1,0 +1,44 @@
+== Bootstrap using custom PropertySourceLocator
+
+Custom PropertySourceLocator based on https://github.com/spring-cloud/spring-cloud-config[Spring Cloud Config].
+
+Documentation and links:
+
+* http://projects.spring.io/spring-cloud[Spring Cloud home page]
+* http://cloud.spring.io/spring-cloud-static/docs/1.0.x/spring-cloud.html[Spring Cloud documentation]
+* https://github.com/spring-cloud/spring-cloud-config[Spring Cloud - GitHub]
+
+=== Initial project setup
+
+Create a Spring Boot application with the following dependencies:
+
+* cloud-starter - provides the spring-cloud-context dependency
+* actuator - provides the spring-boot-starter-actuator dependency
+* configuration-processor - used to declare properties in bootstrap.yml
+* web - used to provide a simple endpoint for testing in this example
+
+From the http://cloud.spring.io/spring-cloud-static/docs/1.0.x/spring-cloud.html#_endpoints[documentation], the following endpoints will be provided using this configuration:
+
+* POST to /env to update the Environment and rebind @ConfigurationProperties and log levels
+* /refresh for re-loading the boot strap context and refreshing the @RefreshScope beans
+* /restart for closing the ApplicationContext and restarting it (disabled by default)
+* /pause and /resume for calling the Lifecycle methods (stop() and start() on the ApplicationContext)
+
+Use the following commands to initialise the application:
+
+[source,bash,indent=0]
+----
+mkdir spring-custom-config && cd spring-custom-config
+
+curl https://start.spring.io/starter.zip \
+  -d type=maven-project \
+  -d applicationName="ExampleApplication" \
+  -d packageName="jp.bikon" \
+  -d groupId="jp.bikon" -d name="example" -d artifactId="example" \
+  -d description="Spring Cloud Example Application" \
+  -d dependencies=cloud-starter,actuator,configuration-processor,web \
+  -d version="0.1.0-SNAPSHOT" \
+  -d javaVersion="1.8" \
+  | tar -xzvf -
+----
+
